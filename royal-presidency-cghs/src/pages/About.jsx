@@ -1,12 +1,24 @@
+import { useState, useEffect } from 'react';
+import { apiFetch } from '../utils/api';
 import './About.css';
 
 export default function About() {
-  const committee = [
-    { name: 'Rajiv Sharma', role: 'President', phone: '+91 98765 11111' },
-    { name: 'Anita Desai', role: 'Secretary', phone: '+91 98765 22222' },
-    { name: 'Vikram Singh', role: 'Treasurer', phone: '+91 98765 33333' },
-    { name: 'Meera Reddy', role: 'Executive Member', phone: '+91 98765 44444' },
-  ];
+  const [committee, setCommittee] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCommittee = async () => {
+      try {
+        const data = await apiFetch('/committee');
+        setCommittee(data);
+      } catch (err) {
+        console.error("Failed to load committee", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchCommittee();
+  }, []);
 
   return (
     <div className="about-page">
@@ -32,16 +44,24 @@ export default function About() {
 
         <section className="about-committee">
           <h2 className="section-title">Managing Committee</h2>
-          <div className="committee-grid">
-            {committee.map((member, index) => (
-              <div key={index} className="glass-card committee-card">
-                <div className="avatar">{member.name.charAt(0)}</div>
-                <h3>{member.name}</h3>
-                <span className="role">{member.role}</span>
-                <span className="phone">{member.phone}</span>
-              </div>
-            ))}
-          </div>
+          {isLoading ? (
+            <div style={{ textAlign: 'center', color: '#64748b', padding: '2rem' }}>Loading managing committee roster...</div>
+          ) : committee.length === 0 ? (
+            <div style={{ textAlign: 'center', color: '#64748b', padding: '2rem', border: '2px dashed #cbd5e1', borderRadius: '12px' }}>
+              Committee roster is currently being updated.
+            </div>
+          ) : (
+            <div className="committee-grid">
+              {committee.map((member, index) => (
+                <div key={member._id || index} className="glass-card committee-card" style={{ animation: `fadeIn 0.5s ease-out ${index * 0.1}s both` }}>
+                  <div className="avatar">{member.name.charAt(0)}</div>
+                  <h3>{member.name}</h3>
+                  <span className="role">{member.role}</span>
+                  <span className="phone">{member.phone}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </div>

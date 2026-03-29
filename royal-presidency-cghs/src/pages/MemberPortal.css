@@ -1,36 +1,75 @@
-/* Login Page */
+/* 
+  Member Portal - Luxury Glassmorphic 
+*/
+
+/* Authentication Container */
 .portal-login-page {
   min-height: calc(100vh - 5rem);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
-  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.05), transparent);
-  animation: fadeIn 0.5s ease;
+  padding: clamp(1rem, 5vw, 2rem);
+  background: transparent;
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .login-box {
   width: 100%;
-  max-width: 400px;
-  padding: 3rem 2rem;
+  max-width: 440px;
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
+  position: relative;
+  z-index: 10;
+}
+
+/* Subtle glowing orb effect behind the login box */
+.portal-login-page::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40vw; height: 40vw;
+  max-width: 600px; max-height: 600px;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .login-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .login-header h2 {
-  font-size: 1.75rem;
-  margin: 1rem 0 0.5rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin: 1.25rem 0 0.5rem;
+  background: linear-gradient(135deg, var(--text-main), var(--primary-light));
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .login-header p {
   color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* Form Structural Integrity */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .input-with-icon {
   position: relative;
+  width: 100%;
 }
 
 .input-with-icon .input-icon {
@@ -39,115 +78,105 @@
   top: 50%;
   transform: translateY(-50%);
   color: var(--text-muted);
+  z-index: 2;
 }
 
 .input-with-icon input {
-  padding-left: 2.75rem !important;
-  width: 100%;
+  padding-left: 2.75rem !important; /* Overrides index.css base padding gracefully */
+  background: rgba(255, 255, 255, 0.03); /* Subtle backdrop */
+}
+
+@media (prefers-color-scheme: dark) {
+  .input-with-icon input {
+    background: rgba(15, 23, 42, 0.4);
+  }
 }
 
 .login-footer {
   text-align: center;
-  margin-top: 1.5rem;
-  font-size: 0.875rem;
+  margin-top: 2rem;
+  font-size: 0.9rem;
 }
 
-/* Dashboard Page */
+.login-footer button {
+  color: var(--primary-light) !important;
+  font-weight: 600;
+  padding: 0.5rem;
+}
+
+/* 
+  Dashboard Interface 
+*/
 .dashboard-page {
-  animation: fadeIn 0.5s ease;
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: clamp(1rem, 4vw, 2rem);
 }
 
 .dashboard-header {
-  background: var(--accent);
-  color: white;
-  padding: 2rem 0;
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
 }
 
 .welcome-banner {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(15, 23, 42, 0.2));
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--border);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: var(--radius-lg);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1.5rem;
+  box-shadow: var(--shadow-md);
 }
 
 .welcome-banner h1 {
-  color: white;
-  margin-bottom: 0.5rem;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
 }
 
-@media (max-width: 600px) {
-  .welcome-banner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
+.welcome-banner .text-secondary {
+  color: var(--primary-light);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: -2rem; /* Pull up into header */
+  gap: clamp(1rem, 3vw, 2rem);
+  align-items: start;
 }
 
-/* Widgets */
+/* 
+  Widget Architecture 
+*/
 .widget {
-  background: var(--surface);
-  border-top: 4px solid var(--primary);
-  opacity: 0;
-  animation: slideDown 0.5s ease forwards;
+  animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  /* Extends glass-card class applied in JSX natively */
 }
 
 .widget:nth-child(1) { animation-delay: 0.1s; }
 .widget:nth-child(2) { animation-delay: 0.2s; }
-.widget:nth-child(3) { animation-delay: 0.3s; }
 
 .widget-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .widget-header h3 {
   font-size: 1.25rem;
   margin: 0;
+  color: var(--text-main);
 }
 
-.dues-amount {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 0.5rem;
-  color: var(--accent);
-}
-
-@media (prefers-color-scheme: dark) {
-  .dues-amount { color: #fff; }
-}
-
-.currency {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 0.25rem;
-}
-
-.amount {
-  font-size: 3rem;
-  font-weight: 700;
-  line-height: 1;
-  font-family: var(--font-heading);
-}
-
-.due-date {
-  color: var(--error);
-  font-size: 0.875rem;
-  margin-bottom: 1.5rem;
-}
-
-.pay-btn {
-  width: 100%;
-}
-
+/* Tickets Presentation */
 .ticket-list {
   list-style: none;
   padding: 0;
@@ -157,8 +186,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
+  padding: 1.25rem 0;
   border-bottom: 1px solid var(--border);
+  transition: var(--transition-fast);
+}
+
+.ticket-list li:hover {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 0.5rem;
 }
 
 .ticket-list li:last-child {
@@ -168,46 +204,52 @@
 
 .ticket-info strong {
   display: block;
-  font-size: 0.875rem;
+  font-size: 1rem;
+  color: var(--text-main);
   margin-bottom: 0.25rem;
+}
+
+.ticket-info p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
 }
 
 .ticket-info span {
   font-size: 0.75rem;
   color: var(--text-muted);
-}
-
-.status {
-  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   font-weight: 600;
-  padding: 0.25rem 0.5rem;
-  border-radius: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
 }
 
-.status.pending { background: #fef3c7; color: #92400e; }
-.status.resolved { background: #dcfce7; color: #166534; }
-
+/* Complaint Form Fixes */
 .complaint-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .complaint-form select, .complaint-form textarea {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--bg-color);
-  color: var(--text-main);
-  font-family: var(--font-sans);
 }
 
-.complaint-form select:focus, .complaint-form textarea:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+/* Universal Mobile Wrap */
+@media (max-width: 768px) {
+  .welcome-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .welcome-banner .btn-secondary,
+  .welcome-banner .btn-primary {
+    width: 100%;
+  }
+
+  .ticket-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 }

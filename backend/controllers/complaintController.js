@@ -43,4 +43,17 @@ const updateComplaintStatus = async (req, res) => {
   }
 };
 
-module.exports = { getComplaints, createComplaint, updateComplaintStatus };
+const deleteComplaint = async (req, res) => {
+  try {
+    const complaint = await Complaint.findById(req.params.id);
+    if (!complaint) {
+      return res.status(404).json({ message: 'Complaint not found' });
+    }
+    await complaint.deleteOne();
+    res.json({ message: 'Complaint removed' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { getComplaints, createComplaint, updateComplaintStatus, deleteComplaint };

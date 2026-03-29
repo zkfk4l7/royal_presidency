@@ -22,11 +22,13 @@ const authRoutes = require('./routes/authRoutes');
 const noticeRoutes = require('./routes/noticeRoutes');
 const complaintRoutes = require('./routes/complaintRoutes');
 const testRoutes = require('./routes/testRoutes'); // Added for testing
+const committeeRoutes = require('./routes/committeeRoutes');
 
 // API Routes
 app.use('/api/users', authRoutes);
 app.use('/api/notices', noticeRoutes);
 app.use('/api/complaints', complaintRoutes);
+app.use('/api/committee', committeeRoutes);
 app.use('/api/test', testRoutes); // Mount testing routes
 
 // Basic route

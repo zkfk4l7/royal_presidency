@@ -37,4 +37,20 @@ const deleteNotice = async (req, res) => {
   }
 };
 
-module.exports = { getNotices, createNotice, deleteNotice };
+const updateNotice = async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    const notice = await Notice.findById(req.params.id);
+    if (!notice) {
+      return res.status(404).json({ message: 'Notice not found' });
+    }
+    notice.title = title || notice.title;
+    notice.content = content || notice.content;
+    const updatedNotice = await notice.save();
+    res.json(updatedNotice);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+module.exports = { getNotices, createNotice, updateNotice, deleteNotice };
