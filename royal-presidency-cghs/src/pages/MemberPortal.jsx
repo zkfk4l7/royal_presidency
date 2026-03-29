@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { User, Lock, CreditCard, AlertCircle, CheckCircle, Mail, Home } from 'lucide-react';
+import { User, Lock, CreditCard, AlertCircle, CheckCircle, Mail, Home, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import './MemberPortal.css';
 import { useAuth } from '../context/AuthContext';
 import { apiFetch } from '../utils/api';
@@ -133,7 +134,14 @@ export default function MemberPortal() {
             <h1 style={{ margin: 0, color: 'var(--text)' }}>Welcome back, <span className="text-secondary">{user.name}</span> ({user.flatNumber})</h1>
             <p style={{ margin: 0, marginTop: '0.5rem', color: 'var(--text-light)' }}>Here is your account overview.</p>
           </div>
-          <button className="btn-secondary" onClick={logout} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>Logout</button>
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            {user.role === 'admin' && (
+              <Link to="/admin" className="btn-primary" style={{ padding: '0.5rem 1rem', borderRadius: '6px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 'bold' }}>
+                <ShieldCheck size={18} /> Admin Control Center
+              </Link>
+            )}
+            <button className="btn-secondary" onClick={logout} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>Logout</button>
+          </div>
         </div>
       </div>
 

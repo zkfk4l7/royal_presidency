@@ -47,6 +47,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Export the Firebase Function
-// Trigger Redeployment (Firebase Cache Break: 1711831800)
+// Trigger Redeployment (Firebase Auth Break Injection: authentic)
 console.log("Firebase Redeploy Trigger: " + Date.now());
+const CACHE_BREAKER_AUTH = "authentic_push";
 exports.api = onRequest({ region: "us-central1" }, app);
