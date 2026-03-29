@@ -150,6 +150,7 @@ export default function MemberPortal() {
                 <li key={complaint._id} style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem 0', borderBottom: '1px solid #eee' }}>
                   <div className="ticket-info">
                     <strong style={{ display: 'block' }}>{complaint.title}</strong>
+                    <p style={{ margin: '0.25rem 0', fontSize: '0.9rem', color: '#444' }}>{complaint.description}</p>
                     <span style={{ fontSize: '0.85rem', color: '#666' }}>Raised: {new Date(complaint.createdAt).toLocaleDateString()}</span>
                   </div>
                   <span className={`status ${complaint.status}`} style={{ padding: '0.25rem 0.5rem', borderRadius: '4px', background: complaint.status === 'resolved' ? '#dcfce7' : '#fee2e2', color: complaint.status === 'resolved' ? 'green' : 'red', fontSize: '0.85rem', fontWeight: 'bold' }}>

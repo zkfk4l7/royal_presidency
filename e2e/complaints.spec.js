@@ -26,6 +26,6 @@ test.describe('Complaints & Tickets flows', () => {
 
     // We should see the ticket in the widget now
     await expect(page.locator('text=The hallway light is flickering continuously.')).toBeVisible();
-    await expect(page.locator('text=Electrical')).toBeVisible();
+    await expect(page.locator('strong:has-text("Electrical")')).toBeVisible();
   });
 });
