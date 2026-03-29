@@ -4,7 +4,7 @@ test.describe('Authentication Flows', () => {
 
   test.beforeEach(async ({ request }) => {
     // Seed the database
-    await request.post('http://localhost:5001/api/test/seed');
+    await request.post('http://127.0.0.1:5001/api/test/seed');
   });
 
   test('Guest is redirected from Member Portal to Login', async ({ page }) => {

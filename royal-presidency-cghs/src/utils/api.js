@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5001/api';
+const BASE_URL = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5001/api';
 
 export const apiFetch = async (endpoint, options = {}) => {
   const token = localStorage.getItem('token');

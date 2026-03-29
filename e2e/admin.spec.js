@@ -4,7 +4,7 @@ test.describe('Admin Operations flows', () => {
 
   test.beforeEach(async ({ page, request }) => {
     // Seed DB
-    await request.post('http://localhost:5001/api/test/seed');
+    await request.post('http://127.0.0.1:5001/api/test/seed');
 
     // Login as admin
     await page.goto('/portal');

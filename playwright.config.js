@@ -32,7 +32,7 @@ export default defineConfig({
        port: 5001,
        reuseExistingServer: !process.env.CI,
        timeout: 120 * 1000,
-       env: { PORT: "5001" } // specify port explicitly for backend
+       env: { PORT: "5001", TEST_MODE: "true" } // specify port and sandbox db
     }
   ],
 });
