@@ -1,0 +1,66 @@
+.notices-page { animation: fadeIn 0.5s ease-out; }
+
+.notices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.notice-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  transition: var(--transition);
+}
+
+.notice-icon {
+  background: rgba(59, 130, 246, 0.1);
+  padding: 1rem;
+  border-radius: 50%;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.notice-content {
+  flex: 1;
+}
+
+.notice-content h3 {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}
+
+.notice-date {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.notice-type {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  text-transform: uppercase;
+}
+
+.type-meeting { background: #dbeafe; color: #1e40af; }
+.type-maintenance { background: #fef3c7; color: #92400e; }
+.type-event { background: #dcfce7; color: #166534; }
+.type-finance { background: #fee2e2; color: #991b1b; }
+
+.download-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 600px) {
+  .notice-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .download-btn {
+    width: 100%;
+  }
+}

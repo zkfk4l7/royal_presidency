@@ -1,0 +1,100 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - link "Royal Presidency" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - img [ref=e6]
+      - text: Royal Presidency
+    - generic [ref=e10]:
+      - link "Home" [ref=e11] [cursor=pointer]:
+        - /url: /
+        - img [ref=e12]
+        - text: Home
+      - link "About" [ref=e15] [cursor=pointer]:
+        - /url: /about
+        - img [ref=e16]
+        - text: About
+      - link "Notices" [ref=e18] [cursor=pointer]:
+        - /url: /notices
+        - img [ref=e19]
+        - text: Notices
+      - link "Amenities" [ref=e22] [cursor=pointer]:
+        - /url: /amenities
+        - img [ref=e23]
+        - text: Amenities
+      - link "Contact" [ref=e27] [cursor=pointer]:
+        - /url: /contact
+        - img [ref=e28]
+        - text: Contact
+      - link "Member Login" [ref=e30] [cursor=pointer]:
+        - /url: /portal
+        - img [ref=e31]
+        - generic [ref=e35]: Member Login
+  - main [ref=e36]:
+    - generic [ref=e37]:
+      - generic [ref=e39]:
+        - generic [ref=e40]:
+          - heading "Welcome back, Admin Test (ADMIN-1)" [level=1] [ref=e41]
+          - paragraph [ref=e42]: Here is your account overview.
+        - button "Logout" [ref=e43] [cursor=pointer]
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - heading "Your Recent Tickets" [level=3] [ref=e47]
+            - img [ref=e48]
+          - list [ref=e50]:
+            - listitem [ref=e51]:
+              - generic [ref=e52]:
+                - strong [ref=e53]: Leaky Pipe
+                - generic [ref=e54]: "Raised: 3/29/2026"
+              - generic [ref=e55]: OPEN
+        - generic [ref=e56]:
+          - heading "Raise Helpdesk Ticket" [level=3] [ref=e58]
+          - generic [ref=e59]:
+            - combobox [ref=e60]:
+              - option "Select Category" [selected]
+              - option "Plumbing"
+              - option "Electrical"
+              - option "Carpentry"
+              - option "Security / Parking"
+              - option "Other"
+            - textbox "Describe your issue..." [ref=e61]
+            - button "Submit Ticket" [ref=e62] [cursor=pointer]
+  - contentinfo [ref=e63]:
+    - generic [ref=e64]:
+      - generic [ref=e65]:
+        - generic [ref=e66]:
+          - img [ref=e67]
+          - heading "Royal Presidency" [level=2] [ref=e71]
+        - paragraph [ref=e72]: A premium cooperative group housing society dedicated to providing an elite, secure, and harmonious living environment.
+      - generic [ref=e73]:
+        - heading "Quick Links" [level=3] [ref=e74]
+        - list [ref=e75]:
+          - listitem [ref=e76]:
+            - link "About Us" [ref=e77] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e78]:
+            - link "Notice Board" [ref=e79] [cursor=pointer]:
+              - /url: /notices
+          - listitem [ref=e80]:
+            - link "Amenities" [ref=e81] [cursor=pointer]:
+              - /url: /amenities
+          - listitem [ref=e82]:
+            - link "Contact Support" [ref=e83] [cursor=pointer]:
+              - /url: /contact
+      - generic [ref=e84]:
+        - heading "Contact Us" [level=3] [ref=e85]
+        - list [ref=e86]:
+          - listitem [ref=e87]:
+            - img [ref=e88]
+            - generic [ref=e91]: Plot GH-5, Block C, Sector 45, Gurugram, HR 122003
+          - listitem [ref=e92]:
+            - img [ref=e93]
+            - generic [ref=e95]: +91 98765 43210
+          - listitem [ref=e96]:
+            - img [ref=e97]
+            - generic [ref=e100]: contact@royalpresidency.com
+    - paragraph [ref=e102]: © 2026 Royal Presidency CGHS. All rights reserved.
+```

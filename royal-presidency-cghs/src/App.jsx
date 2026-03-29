@@ -1,0 +1,30 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import RootLayout from './layouts/RootLayout';
+import Home from './pages/Home';
+import About from './pages/About';
+import Notices from './pages/Notices';
+import Amenities from './pages/Amenities';
+import Contact from './pages/Contact';
+import MemberPortal from './pages/MemberPortal';
+import AdminDashboard from './pages/AdminDashboard';
+import PrivateRoute from './components/PrivateRoute';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<RootLayout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="notices" element={<Notices />} />
+          <Route path="amenities" element={<Amenities />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="portal" element={<MemberPortal />} />
+          <Route path="admin" element={<PrivateRoute adminOnly={true}><AdminDashboard /></PrivateRoute>} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
