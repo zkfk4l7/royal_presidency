@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Users, Bell, AlertTriangle, Trash2, CheckCircle, Search, LayoutDashboard, Clock, CheckCircle2, UserPlus, Inbox, Edit2, PlusCircle, Briefcase } from 'lucide-react';
+import { Users, Bell, AlertTriangle, Trash2, CheckCircle, Search, LayoutDashboard, Clock, CheckCircle2, UserPlus, Inbox, Edit2, PlusCircle, Briefcase, FileText, Paperclip } from 'lucide-react';
 import { apiFetch } from '../utils/api';
 import './MemberPortal.css'; 
 
@@ -11,7 +11,7 @@ export default function AdminDashboard() {
   const [committee, setCommittee] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   
-  const [newNotice, setNewNotice] = useState({ title: '', content: '' });
+  const [newNotice, setNewNotice] = useState({ title: '', content: '', file: null });
   
   // Search and Filter States
   const [userSearch, setUserSearch] = useState('');
@@ -67,8 +67,14 @@ export default function AdminDashboard() {
   const handleCreateNotice = async (e) => {
     e.preventDefault();
     try {
-      await apiFetch('/notices', { method: 'POST', body: JSON.stringify(newNotice) });
-      setNewNotice({ title: '', content: '' });
+      const form = new FormData();
+      form.append('title', newNotice.title);
+      form.append('content', newNotice.content);
+      if (newNotice.file) {
+        form.append('attachment', newNotice.file);
+      }
+      await apiFetch('/notices', { method: 'POST', body: form });
+      setNewNotice({ title: '', content: '', file: null });
       fetchAllData();
     } catch (err) { alert(err.message); }
   };
@@ -116,7 +122,16 @@ export default function AdminDashboard() {
   const submitEditNotice = async (e) => {
     e.preventDefault();
     try {
-      await apiFetch(`/notices/${editNotice._id}`, { method: 'PUT', body: JSON.stringify(formData) });
+      const form = new FormData();
+      form.append('title', formData.title);
+      form.append('content', formData.content);
+      if (formData.file) {
+        form.append('attachment', formData.file);
+      } else if (formData.clearAttachment) {
+        form.append('clearAttachment', 'true');
+      }
+
+      await apiFetch(`/notices/${editNotice._id}`, { method: 'PUT', body: form });
       setEditNotice(null); setFormData({}); fetchAllData();
     } catch (err) { alert(err.message); }
   };
@@ -404,9 +419,13 @@ export default function AdminDashboard() {
                 <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#64748b', marginBottom: '0.5rem' }}>Announcement Title</label>
                 <input type="text" placeholder="e.g. Pool Maintenance Schedule" value={newNotice.title} onChange={e => setNewNotice({...newNotice, title: e.target.value})} required style={{ padding: '0.75rem', width: '100%', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
               </div>
-              <div style={{ flex: '2', minWidth: '300px' }}>
+              <div style={{ flex: '1.5', minWidth: '300px' }}>
                 <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#64748b', marginBottom: '0.5rem' }}>Detailed Message</label>
                 <input type="text" placeholder="e.g. The main pool will be closed on Friday from 8AM to 12PM..." value={newNotice.content} onChange={e => setNewNotice({...newNotice, content: e.target.value})} required style={{ padding: '0.75rem', width: '100%', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
+              </div>
+              <div style={{ flex: '1', minWidth: '200px' }}>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#64748b', marginBottom: '0.5rem' }}>Attach File (Max 15MB)</label>
+                <input type="file" onChange={e => setNewNotice({...newNotice, file: e.target.files[0]})} style={{ padding: '0.6rem', width: '100%', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem', backgroundColor: 'white' }} />
               </div>
               <div style={{ display: 'flex', alignItems: 'flex-end', minWidth: '150px' }}>
                 <button type="submit" className="btn-primary" style={{ padding: '0.75rem 1.5rem', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
@@ -434,6 +453,13 @@ export default function AdminDashboard() {
                         </div>
                       </div>
                       <p style={{ margin: '0', color: '#475569', lineHeight: '1.5', fontSize: '0.95rem' }}>{n.content}</p>
+                      {n.attachmentUrl && (
+                        <div style={{ marginTop: '1rem' }}>
+                          <a href={n.attachmentUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#f1f5f9', color: '#4f46e5', padding: '0.5rem 1rem', borderRadius: '8px', textDecoration: 'none', fontWeight: '600', fontSize: '0.85rem', border: '1px solid #e2e8f0', transition: 'background 0.2s' }}>
+                            <Paperclip size={16} /> Download {n.attachmentName || 'Attachment'}
+                          </a>
+                        </div>
+                      )}
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#94a3b8', fontSize: '0.8rem', marginTop: '1.5rem', fontWeight: '500' }}>
                       <Clock size={14} /> Posted {new Date(n.date).toLocaleDateString()}
@@ -536,6 +562,19 @@ export default function AdminDashboard() {
           <form onSubmit={submitEditNotice} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <input type="text" placeholder="Announcement Title" required value={formData.title || ''} onChange={e => setFormData({...formData, title: e.target.value})} style={{ padding: '0.85rem', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
             <textarea placeholder="Detailed Message" required value={formData.content || ''} onChange={e => setFormData({...formData, content: e.target.value})} style={{ padding: '0.85rem', borderRadius: '6px', border: '1px solid #cbd5e1', minHeight: '150px', fontFamily: 'inherit' }} />
+            
+            <div style={{ padding: '1rem', background: '#f8fafc', borderRadius: '8px', border: '1px dashed #cbd5e1' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: '#64748b', marginBottom: '0.5rem' }}>Replace/Attach Document (Max 15MB)</label>
+              <input type="file" onChange={e => setFormData({...formData, file: e.target.files[0]})} style={{ width: '100%', fontSize: '0.85rem' }} />
+              {editNotice?.attachmentUrl && !formData.clearAttachment && !formData.file && (
+                <div style={{ marginTop: '0.75rem', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ color: '#166534', wordBreak: 'break-all' }}>Current: {editNotice.attachmentName}</span>
+                  <button type="button" onClick={() => setFormData({...formData, clearAttachment: true})} style={{ color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8rem', textDecoration: 'underline' }}>Remove</button>
+                </div>
+              )}
+              {formData.clearAttachment && <span style={{ display: 'block', marginTop: '0.5rem', fontSize: '0.85rem', color: '#ef4444', fontWeight: 'bold' }}>Attachment marked for deletion.</span>}
+            </div>
+
             <button type="submit" className="btn-primary" style={{ marginTop: '0.5rem', width: '100%', padding: '0.85rem', border: 'none' }}>Update Notice</button>
           </form>
         </ModalTemplate>
